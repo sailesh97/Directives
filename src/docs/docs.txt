@@ -1,0 +1,11 @@
+Understanding Directives
+
+Attribute Directives:
+They're called so because they sit on HTML Elements just like attributes.
+
+Structural Directives:
+Though Structural Directives also sit on HTML Elements, they're named so because 
+they are responsible for structure of the DOM.
+
+If *ngIf = false, that element is removed from the DOM, not hidden, it's removed.
+
