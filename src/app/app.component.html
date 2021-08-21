@@ -29,10 +29,32 @@
       </ul>
       <!-- <appBasicHighlight> Style me with directive </appBasicHighlight> -->
       <p appBasicHighlight> Style me with directive </p>
-      <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'"> Style me with better directive </p>
+      <!-- <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'"> Style me with better directive </p> -->
 
       <!-- Another Syntax of property binding -->
-      <p appBetterHighlight defaultColor="yellow" highlightColor="red"> Style me with better directive </p>
+      <!-- <p appBetterHighlight defaultColor="yellow" highlightColor="red"> Style me with better directive </p> -->
+      
+      <p [appBetterHighlight]="'red'" defaultColor="yellow" > Style me with better directive </p>
+      <!-- 
+        Two interesting things to observe:
+        i. Here we pass two extra attribute looking values. Which are properties of the directive we have used and not the properties of the paragraph.
+        So how does Angular know which is a native paragraph attribute and which is not. or a property of the directive. 
+        The answer is: it just figures that out. It simply just checks our custom directives and hence knows about their properties 1st before it reaches the native HTML attributes.
+
+        ii. So, we can bind to properties of our own directive( defaultColor here), by placing them on same element and wrapping with [].
+        In ngClass which is a built-in directive the directive itself is enclosed in [].
+
+        That's a typical usecase where your directive has only one property or atleast one main property in it.
+        In that scenario you can use an alias(same as your directive selector)
+
+        It's optional if you want you can use two different names for directive Name and your property name
+        Or you can use the same name for both. 
+
+        That's the reason why we wrapped ngClass with [] and not wrapped appBetterHighlight (at first).
+        Because by wrapping [] in ngClass we're binding to ngClass property of the ngClass directive.
+
+        We could achieve the same behaviour for appBetterHighlight by using alias name. We have also seen how to maintain separate names for directive name and main property name of the directive.
+      -->
     </div>
   </div>
 </div>
