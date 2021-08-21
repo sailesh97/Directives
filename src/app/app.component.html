@@ -9,14 +9,19 @@
         <div *ngIf = "onlyOdd">
           <li
           class="list-group-item"
-          *ngFor="let odd of oddNumbers">
+          *ngFor="let odd of oddNumbers"
+          [ngClass]="{odd: odd % 2 !== 0}"
+          [ngStyle]="{backgroundColor: odd % 2 != 0 ? 'yellow' : transparent}"
+          >
           {{ odd }}
           </li>
         </div>
         <div *ngIf = "!onlyOdd">
           <li
           class="list-group-item"
-          *ngFor="let even of evenNumbers">
+          *ngFor="let even of evenNumbers"
+          [ngClass]="{odd: even % 2 !== 0}"
+          >
           {{ even }}
         </li>
         </div>
@@ -24,3 +29,26 @@
     </div>
   </div>
 </div>
+
+<!-- 
+
+  ngClass is a directive
+
+  [ngClass]= "{cssClassName: any statement/method/conditon that resolves to a boolean value }"
+
+  The square bracket around ngClass here denotes that we're binding to some property on our ngClass directive.
+
+  ngClass expects an object (within double quotes), where the key is the css class name and it's value is a Javascript statement, method or anything that at the end resolves to a boolean value.
+
+ -->
+
+ <!--
+
+  ngStyle is another in-built directive.
+
+  Syntax: [ngStyle] = "{backgroundColor: odd % 2 !== 0 ? 'yellow' : 'transparent'}"
+
+  ngStyle also expects an object (within double quotes), where the key is an css style property and like ngClass it's value can also be set dynamically through a function call, or Javascript statement
+  and the value depends on what css style property you have used. Here a string (that's a color value).
+   
+ -->
