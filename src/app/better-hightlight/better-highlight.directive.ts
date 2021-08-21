@@ -1,4 +1,4 @@
-import { ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Directive } from '@angular/core';
 
 @Directive({
@@ -7,9 +7,18 @@ import { Directive } from '@angular/core';
 export class BetterHighlightDirective implements OnInit{
 
   constructor(private myRenderer: Renderer2, private myElement: ElementRef) { }
+
   ngOnInit(){
+    // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
+  }
+
+  @HostListener('mouseenter') myMouserOver(eventData: Event){
     this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
   }
+  @HostListener('mouseleave') myMouserLeave(eventData: Event){
+    this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "transparent");
+  }
+
 }
 
 /**
@@ -44,4 +53,35 @@ export class BetterHighlightDirective implements OnInit{
  * 2nd Arg as the CSS Property Name
  * 3rd Arg as the value of the CSS Property mentioned
  * 4th Arg is optional, where you can mention any flag like !important to override this CSS with any other conflicting CSS styling used in application
+ */
+
+/**
+ * The usecase in which we should use directive is:
+ * If we want to do something with a HTML element, by just mentioning a single word on it.
+ * For ex: 
+ * <p appBetterHighlight> Some Text </p>
+ * 
+ * Let say you want a directive that gives you a functionality:
+ *  i.  Wherever you place this directive, it will turn the background color of that HTML element.
+ *  ii. On hovering hover changed the background color to some other color.
+ *  iii.On hovering out change the background color to again something else. 
+ * 
+ * So you just shipped 3 features and can add these 3 features on any HTML element if you want by just placing a single word on the HTML element you want.
+ * 
+ * Until now we knew how to use a directive to access and change properties of a HTML element. 
+ * Let's see how we can add event listeners to directives.
+ * 
+ * If we add a mouseenter listener to this directive, and change the color on mouse enter.
+ * all HTML elements on which this directive is placed on will react to the mouseenter event listener
+ * 
+ * We can add a event listener using @HostListener() decorator.
+ * 
+ * Syntax:
+ * 
+ * @HostListener("event_name") anyFunctionName(eventData){
+ * }
+ * 
+ * anyFunctionName will be triggered whenever event_name is triggered.
+ * 
+ * event_name could be your custom events as well.
  */
