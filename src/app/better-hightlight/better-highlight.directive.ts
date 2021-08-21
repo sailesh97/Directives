@@ -1,10 +1,12 @@
-import { ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { ElementRef, HostListener, OnInit, Renderer2, HostBinding } from '@angular/core';
 import { Directive } from '@angular/core';
 
 @Directive({
   selector: '[appBetterHighlight]'
 })
 export class BetterHighlightDirective implements OnInit{
+
+  @HostBinding("style.backgroundColor") myBackgroundColor: string = 'transparent';
 
   constructor(private myRenderer: Renderer2, private myElement: ElementRef) { }
 
@@ -13,10 +15,12 @@ export class BetterHighlightDirective implements OnInit{
   }
 
   @HostListener('mouseenter') myMouserOver(eventData: Event){
-    this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
+    // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
+    this.myBackgroundColor = 'red';
   }
   @HostListener('mouseleave') myMouserLeave(eventData: Event){
-    this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "transparent");
+    // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "transparent");
+    this.myBackgroundColor = 'transparent';
   }
 
 }
@@ -84,4 +88,16 @@ export class BetterHighlightDirective implements OnInit{
  * anyFunctionName will be triggered whenever event_name is triggered.
  * 
  * event_name could be your custom events as well.
+ */
+ 
+/**
+ * Another way of accessing and changing the DOM is through the @HostBinding() decorator.
+ * This can be an alternative to @HostListeners() though there's nothing wrong with that syntax.
+ * 
+ * Syntax: 
+ * @HostBinding("style.backgroundColor") myBackgroundColor: string;
+ * 
+ * It gets the HTML element on which the directive is placed on.
+ * Every HTML element has a style property in it. So It gets the backgroundColor subproperty from styles object and binds it with myBackgroundColor variable.
+ * 
  */
