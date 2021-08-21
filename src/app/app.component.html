@@ -29,7 +29,10 @@
       </ul>
       <!-- <appBasicHighlight> Style me with directive </appBasicHighlight> -->
       <p appBasicHighlight> Style me with directive </p>
-      <p appBetterHighlight> Style me with better directive </p>
+      <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'red'"> Style me with better directive </p>
+
+      <!-- Another Syntax of property binding -->
+      <p appBetterHighlight defaultColor="yellow" highlightColor="red"> Style me with better directive </p>
     </div>
   </div>
 </div>

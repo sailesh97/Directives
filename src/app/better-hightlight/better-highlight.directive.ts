@@ -1,4 +1,4 @@
-import { ElementRef, HostListener, OnInit, Renderer2, HostBinding } from '@angular/core';
+import { ElementRef, HostListener, OnInit, Renderer2, HostBinding, Input } from '@angular/core';
 import { Directive } from '@angular/core';
 
 @Directive({
@@ -6,21 +6,26 @@ import { Directive } from '@angular/core';
 })
 export class BetterHighlightDirective implements OnInit{
 
-  @HostBinding("style.backgroundColor") myBackgroundColor: string = 'transparent';
+  @Input() defaultColor: string = 'transparent';
+  @Input() highlightColor: string = 'blue';
+  @HostBinding("style.backgroundColor") myBackgroundColor: string; 
 
   constructor(private myRenderer: Renderer2, private myElement: ElementRef) { }
 
   ngOnInit(){
     // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
+    this.myBackgroundColor = this.defaultColor;
+    // We moved this line from up beacuse we are accessing a property of this class (defaultColor)
+    // And proerties are initialized and ready to use in ngOnInit lifecycle hook and any hooks that comes after this hook.
   }
 
   @HostListener('mouseenter') myMouserOver(eventData: Event){
     // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "yellow");
-    this.myBackgroundColor = 'red';
+    this.myBackgroundColor = this.highlightColor;
   }
   @HostListener('mouseleave') myMouserLeave(eventData: Event){
     // this.myRenderer.setStyle(this.myElement.nativeElement, "background-color", "transparent");
-    this.myBackgroundColor = 'transparent';
+    this.myBackgroundColor = this.defaultColor;
   }
 
 }
@@ -100,4 +105,10 @@ export class BetterHighlightDirective implements OnInit{
  * It gets the HTML element on which the directive is placed on.
  * Every HTML element has a style property in it. So It gets the backgroundColor subproperty from styles object and binds it with myBackgroundColor variable.
  * 
+ */
+
+/**
+ * Ofcourse now we have a reactive directive after adding event listeners to it, But the color values are hard coded. It would be great If we could pass it from outside where we use the directives.
+ * We can do custom property binding in Angular. Custom event binding also works in Angular.
+ * We can bind property like we do in components.
  */
