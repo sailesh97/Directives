@@ -18,14 +18,26 @@
           </li>
         </div>
         <div *ngIf = "!onlyOdd">
-          <li
-          class="list-group-item"
-          *ngFor="let even of evenNumbers"
-          [ngClass]="{odd: even % 2 !== 0}"
-          >
-          {{ even }}
-        </li>
+            <li
+            class="list-group-item"
+            *ngFor="let even of evenNumbers"
+            [ngClass]="{odd: even % 2 !== 0}"
+            >
+            {{ even }}
+          </li>
         </div>
+        <!-- Equivalent of above div with ngIf directive. It converts into the below syntax behind the scenes by Angular as it don't understand any * syntax -->
+        <ng-template [ngIf]="!onlyOdd"> <!-- Binding to ngIf property of ngIf directive -->
+          <div>
+            <li
+              class="list-group-item"
+              *ngFor="let even of evenNumbers"
+              [ngClass]="{odd: even % 2 !== 0}"
+              >
+              {{ even }}
+            </li>
+          </div> 
+        </ng-template>
       </ul>
       <!-- <appBasicHighlight> Style me with directive </appBasicHighlight> -->
       <p appBasicHighlight> Style me with directive </p>
@@ -80,4 +92,50 @@
   ngStyle also expects an object (within double quotes), where the key is an css style property and like ngClass it's value can also be set dynamically through a function call, or Javascript statement
   and the value depends on what css style property you have used. Here a string (that's a color value).
    
+ -->
+
+ <!--
+   What happens behind the scenes on Structural Directives???
+   *ngFor or *ngIf
+    <p *ngIf="!onlyOdd"> Some Text </p>
+
+   The star indicates to Angular that this is a structural directive. But the question is why does it need to know?
+
+   The * in structural directives are just a syntactic sugar for the convinience of the developers. But there is no syntax like * operator in Angular.
+
+   Behind the scenes it converts the elements on which structural directives are placed to something else. That's why to distinguish from other it has a unique sytax of *.
+
+   There are property binding, event binding, two way binding and sting interpolation which have an Angular specific syntax. But there is nos special syntax for *
+   
+      <div *ngIf = "!onlyOdd">
+            <li
+            class="list-group-item"
+            *ngFor="let even of evenNumbers"
+            [ngClass]="{odd: even % 2 !== 0}"
+            >
+            {{ even }}
+          </li>
+      </div>
+
+      The above gets converted into:
+      
+
+      <ng-template [ngIf]="!onlyOdd"> 
+        <div>
+          <li
+            class="list-group-item"
+            *ngFor="let even of evenNumbers"
+            [ngClass]="{odd: even % 2 !== 0}"
+            >
+            {{ even }}
+          </li>
+        </div> 
+      </ng-template>
+
+      Both the syntax are exactly the same, but the content wrapped with ng-template only.
+      The reason is ng-template is an element which itself is not rendered 
+      but allows us to define a template in the end.
+      And upon this we can use a condition based on which angular will decide that the template will be rendered or not.
+    
+      (Binding to ngIf property of ngIf directive.)
  -->
