@@ -81,6 +81,12 @@
       -->
     </div>
   </div>
+  <div [ngSwitch]="value">
+    <p *ngSwitchCase="5">Value is 5</p>
+    <p *ngSwitchCase="10">Value is 10</p>
+    <p *ngSwitchCase="15">Value is 15</p>
+    <p *ngSwitchDefault>Value is default</p>
+  </div>
 </div>
 
 <!-- 
