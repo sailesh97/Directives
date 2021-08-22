@@ -17,6 +17,7 @@
           {{ odd }}
           </li>
         </div>
+        <p>First: using ngIf directive</p>
         <div *ngIf = "!onlyOdd">
             <li
             class="list-group-item"
@@ -26,6 +27,7 @@
             {{ even }}
           </li>
         </div>
+        <p>Second: Using ng-template syntax. This is the syntax that internally gets converted to by Angular whenever we use * (i.e a structural directive)</p>
         <!-- Equivalent of above div with ngIf directive. It converts into the below syntax behind the scenes by Angular as it don't understand any * syntax -->
         <ng-template [ngIf]="!onlyOdd"> <!-- Binding to ngIf property of ngIf directive -->
           <div>
@@ -38,6 +40,16 @@
             </li>
           </div> 
         </ng-template>
+        <p>Third: Using appUnless: a custom directive buill by us which does exactly the opposite of ngIf</p>
+        <div *appUnless = "onlyOdd">
+          <li
+          class="list-group-item"
+          *ngFor="let even of evenNumbers"
+          [ngClass]="{odd: even % 2 !== 0}"
+          >
+          {{ even }}
+        </li>
+      </div>
       </ul>
       <!-- <appBasicHighlight> Style me with directive </appBasicHighlight> -->
       <p appBasicHighlight> Style me with directive </p>
